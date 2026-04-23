@@ -19,17 +19,6 @@ static NSString * const LCAboutRepositoryURLString = @"https://github.com/wtflli
 	}
 }
 
-- (void)viewDidLayoutSubviews {
-	[super viewDidLayoutSubviews];
-	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
-		return;
-	}
-
-	CGRect bounds = self.view.bounds;
-	CGFloat tableWidth = MIN(560.0f, bounds.size.width - 80.0f);
-	self.tableView.frame = CGRectMake(floorf((bounds.size.width - tableWidth) / 2.0f), 0.0f, tableWidth, bounds.size.height);
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 1;
 }

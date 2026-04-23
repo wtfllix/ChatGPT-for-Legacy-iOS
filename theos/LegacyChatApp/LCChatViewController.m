@@ -158,16 +158,30 @@
 
 - (CGFloat)readableContentWidthForBounds:(CGRect)bounds {
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return MIN(bounds.size.width - 80.0f, 620.0f);
+		return MAX(0.0f, bounds.size.width - 32.0f);
 	}
 	return bounds.size.width - 40.0f;
 }
 
 - (CGFloat)horizontalLayoutInsetForBounds:(CGRect)bounds {
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return MAX(32.0f, floorf((bounds.size.width - 700.0f) / 2.0f));
+		return 0.0f;
 	}
 	return 0.0f;
+}
+
+- (CGFloat)toolbarControlWidthForBounds:(CGRect)bounds {
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		return MIN(bounds.size.width, 760.0f);
+	}
+	return bounds.size.width;
+}
+
+- (CGFloat)maximumInputFieldWidth {
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		return 420.0f;
+	}
+	return CGFLOAT_MAX;
 }
 
 - (BOOL)isTallPhoneLayoutForBounds:(CGRect)bounds {
@@ -300,7 +314,10 @@
 	self.inputContainerView = inputContainer;
 	[self.toolbar addSubview:self.inputContainerView];
 
-	UIImageView *inputOverlay = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Images/inputOverlay.png"]] autorelease];
+	UIImage *inputOverlayImage = [UIImage imageNamed:@"Images/inputOverlay.png"];
+	inputOverlayImage = [inputOverlayImage stretchableImageWithLeftCapWidth:(NSInteger)floorf(inputOverlayImage.size.width / 2.0f)
+	                                                           topCapHeight:(NSInteger)floorf(inputOverlayImage.size.height / 2.0f)];
+	UIImageView *inputOverlay = [[[UIImageView alloc] initWithImage:inputOverlayImage] autorelease];
 	self.inputOverlayView = inputOverlay;
 	[self.inputContainerView addSubview:self.inputOverlayView];
 
@@ -456,14 +473,18 @@
 	CGFloat attachWidth = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 64.0f : 58.0f);
 	CGFloat sendWidth = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 76.0f : 68.0f);
 	CGFloat toolbarPadding = 6.0f;
+	CGFloat controlWidth = [self toolbarControlWidthForBounds:self.toolbar.bounds];
 	CGFloat inputX = toolbarPadding + attachWidth + 6.0f;
-	CGFloat inputWidth = contentWidth - inputX - sendWidth - 12.0f;
+	CGFloat inputWidth = controlWidth - inputX - sendWidth - 12.0f;
+	inputWidth = MIN(inputWidth, [self maximumInputFieldWidth]);
 	if (inputWidth < 120.0f) {
 		inputWidth = 120.0f;
 	}
-	self.attachButton.frame = CGRectMake(toolbarPadding, 5.0f, attachWidth, 34.0f);
-	self.sendButton.frame = CGRectMake(contentWidth - sendWidth - toolbarPadding, 5.0f, sendWidth, 34.0f);
-	self.inputContainerView.frame = CGRectMake(inputX, 7.0f, inputWidth, 30.0f);
+	CGFloat compactControlWidth = inputX + inputWidth + 6.0f + sendWidth + toolbarPadding;
+	CGFloat controlX = floorf((contentWidth - compactControlWidth) / 2.0f);
+	self.attachButton.frame = CGRectMake(controlX + toolbarPadding, 5.0f, attachWidth, 34.0f);
+	self.sendButton.frame = CGRectMake(controlX + inputX + inputWidth + 6.0f, 5.0f, sendWidth, 34.0f);
+	self.inputContainerView.frame = CGRectMake(controlX + inputX, 7.0f, inputWidth, 30.0f);
 	self.inputOverlayView.frame = self.inputContainerView.bounds;
 	self.inputField.frame = CGRectMake(10.0f, 4.0f, inputWidth - 20.0f, 22.0f);
 	self.inputPlaceholderLabel.frame = CGRectMake(16.0f, 6.0f, inputWidth - 28.0f, 18.0f);

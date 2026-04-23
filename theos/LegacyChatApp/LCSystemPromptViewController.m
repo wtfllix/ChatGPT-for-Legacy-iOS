@@ -62,7 +62,7 @@
 - (void)viewDidLayoutSubviews {
 	[super viewDidLayoutSubviews];
 	CGRect bounds = self.view.bounds;
-	CGFloat horizontalInset = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? floorf((bounds.size.width - MIN(560.0f, bounds.size.width - 80.0f)) / 2.0f) : 12.0f);
+	CGFloat horizontalInset = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 24.0f : 12.0f);
 	CGFloat contentWidth = bounds.size.width - (horizontalInset * 2.0f);
 	self.textView.frame = CGRectMake(horizontalInset, 14.0f, contentWidth, bounds.size.height - 150.0f);
 	self.defaultButton.frame = CGRectMake(horizontalInset, CGRectGetMaxY(self.textView.frame) + 10.0f, contentWidth, 34.0f);

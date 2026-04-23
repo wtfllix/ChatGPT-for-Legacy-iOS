@@ -15,7 +15,7 @@
 + (CGFloat)boundedTextWidthForCellWidth:(CGFloat)width {
 	CGFloat availableWidth = width - 70.0f;
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return MIN(availableWidth, 500.0f);
+		return MIN(availableWidth, 700.0f);
 	}
 	return availableWidth;
 }

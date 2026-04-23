@@ -29,17 +29,6 @@
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTapped)] autorelease];
 }
 
-- (void)viewDidLayoutSubviews {
-	[super viewDidLayoutSubviews];
-	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
-		return;
-	}
-
-	CGRect bounds = self.view.bounds;
-	CGFloat tableWidth = MIN(560.0f, bounds.size.width - 80.0f);
-	self.tableView.frame = CGRectMake(floorf((bounds.size.width - tableWidth) / 2.0f), 0.0f, tableWidth, bounds.size.height);
-}
-
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	self.profiles = [NSMutableArray arrayWithArray:[CGAPIHelper providerProfiles]];

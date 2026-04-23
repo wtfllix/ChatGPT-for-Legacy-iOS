@@ -1,0 +1,9 @@
+Package: com.wtfllix.legacychatapp
+Name: Legacy-Chatbox
+Version: 0.1.0
+Architecture: iphoneos-arm
+Description: Legacy iOS 6 AI chat app release candidate.
+Maintainer: lx
+Author: lx
+Section: Applications
+Depends: firmware (>= 6.0)

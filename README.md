@@ -1,36 +1,89 @@
-# ChatGPT for Legacy iOS
-## The only ChatGPT application for old iOS that you'll need.
-![siteBanner](https://chatgptlegacy.com/assets/img/banner.png)
-ChatGPT for Legacy iOS is a client for older versions of iOS that allow you to interact with the OpenAI API in many ways. ChatGPT for Legacy iOS supports most things that you already know from modern chatbot apps, such as thorough text conversations with context, image analysis by ChatGPT and image generation. Your conversations are also always saved automatically and can always be returned to whenever you want to.
+# Legacy-Chatbox
 
-# Compatiblilty
+Legacy-Chatbox is a lightweight AI chat client for legacy iOS devices. The current release focuses on iOS 6-era hardware, a Theos build pipeline, OpenAI-compatible providers, and a simple interface that feels at home on older UIKit.
 
-| Compatibility  | iOS version | Remarks |
-| ------------- | ------------- | ------------- |
-| Incompatible  | 5.x  | Not at release |
-| Compatible  | 6.x  | None |
-| Compatible  | 7.x  | None |
-| Compatible  | 8+  | Not optimized for iPhone 6 and 6+ |
-# How do I log in?
-Logging into ChatGPT for Legacy iOS is only possible via an API key. That API key can be obtained from https://platform.openai.com/ and depending on what you want to do, or if you're doing this for the first time it can cost money. Please read through OpenAI's API platform for more information.
+## Status
 
-# Encountering issues, or need support?
-If you're encountering issues you should always take note of what happens, how you triggered it, what your iOS version is, what device type (iPads aren't supported) you're using ChatGPT for Legacy iOS on and then open a new issue on the [issues tab](https://github.com/bag-xml/ChatGPT-for-Legacy-iOS/issues).
+`0.1.0` is the first release of the Theos-based app.
 
-Additionally to that, you can join the bag.xml community discord on https://discord.gg/eE3XTCEMqr. This is the project server of ChatGPT for Legacy iOS, and you can get real-time help at any time if you're having issues regarding the app or more. 
+The original Xcode project remains in this repository for reference, but active release work lives in:
 
-# Support
-If you like the work I do you can support me on [Ko-fi](https://ko-fi.com/bagxml). It would mean the world to me and really motivate me.
-# Credits
+```sh
+theos/LegacyChatApp
+```
 
-### Contributors
-- [bag.xml](https://github.com/bag-xml) 
+## Supported Devices
 
-### Libraries used
+- iPhone 4 / 4S on iOS 6, portrait
+- iPhone 5 on iOS 6, portrait
+- iPad 4 on iOS 6, portrait
 
-- [APLSlideMenu](https://github.com/apploft/APLSlideMenu)
-- Base64
-- NSURLConnection+FoundationCompletions.m (Also Updated OpenSSL Libraries and cURL headers)
-- [TSMarkdownParser](https://github.com/laptobbe/TSMarkdownParser)
-- [SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD)
-- [BButton](https://github.com/mattlawer/BButton)
+## Features
+
+- OpenAI-compatible provider configuration
+- Multiple saved provider/model profiles
+- Optional editable system prompt
+- Local conversation history
+- Streamed assistant output when the provider supports SSE
+- Temporary thinking/reasoning display with final-answer replacement
+- Lightweight Markdown readability support
+- Image input for providers that support multimodal OpenAI-compatible messages
+- iOS 6-style navigation, buttons, launch images, and app icons
+
+## Build
+
+Install Theos, then build from the app directory:
+
+```sh
+cd theos/LegacyChatApp
+make package FINALPACKAGE=1
+```
+
+The generated `.deb` will be placed in:
+
+```sh
+theos/LegacyChatApp/packages/
+```
+
+Install the package on a jailbroken iOS 6 device.
+
+## Provider Setup
+
+Open `Settings > Model Configurations` on device and add a provider:
+
+- `Base URL` should be the provider root, for example `https://api.deepseek.com`.
+- `Chat Path` should be only the endpoint path, for example `/chat/completions`.
+- `Model` should be the exact provider model name.
+- `API Key` is stored locally on device.
+
+The bundled default provider does not include an API key.
+
+## System Prompt
+
+`Settings > System Prompt` lets users edit or clear the prompt sent before each request. The prompt is inserted into API requests at runtime and is not saved into conversation history.
+
+Default prompt:
+
+```text
+You are a concise, helpful assistant in a legacy iOS chat app. Prefer clear, direct answers. Use simple Markdown only when it improves readability, and avoid complex tables or deeply nested formatting.
+```
+
+## Known Limits
+
+- Portrait is the supported orientation for `0.1.0`.
+- Markdown support is intentionally lightweight, not a full Markdown renderer.
+- Image input depends on provider-side multimodal support.
+- Streaming quality depends on provider SSE behavior and old-device performance.
+- No cloud sync; provider profiles and conversations are local to the device.
+
+## Release Testing
+
+Use the checklist in:
+
+```sh
+theos/LegacyChatApp/RELEASE_CHECKLIST.md
+```
+
+## Repository
+
+https://github.com/wtfllix/ChatGPT-for-Legacy-iOS

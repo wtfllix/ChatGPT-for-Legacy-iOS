@@ -1,0 +1,8 @@
+.DS_Store
+*.xcuserstate
+xcuserdata/
+
+# Theos build output
+theos/LegacyChatApp/.theos/
+theos/LegacyChatApp/packages/
+*.deb

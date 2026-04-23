@@ -36,6 +36,10 @@ theos/LegacyChatApp
 
 ### 构建
 
+如果只想安装发布版，可以从 GitHub Releases 下载 `.deb`：
+
+https://github.com/wtfllix/ChatGPT-for-Legacy-iOS/releases/tag/v0.1.0
+
 安装 Theos 后，在 app 目录中构建：
 
 ```sh
@@ -125,6 +129,10 @@ theos/LegacyChatApp
 - iOS 6-style navigation, buttons, launch images, and app icons
 
 ### Build
+
+To install the release build, download the `.deb` from GitHub Releases:
+
+https://github.com/wtfllix/ChatGPT-for-Legacy-iOS/releases/tag/v0.1.0
 
 Install Theos, then build from the app directory:
 
